@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Categories</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+
+    <ion-grid>
+      <ion-row>
+        <div *ngIf="!categories" class="spinnerSection" style="text-align: center;">
+          <ion-spinner name="dots" color="primary"></ion-spinner>
+        </div>
+        <ion-col size-lg="4" size-xs=12 *ngFor="let category of categories">
+          <ion-card *ngIf="category.image" [routerLink]="['/categories', category.id]">
+            <img src="{{category.image.src }}" alt="" />
+            <ion-card-header>
+              <ion-card-title>{{category.name}}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+
+</ion-content>

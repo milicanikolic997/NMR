@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <form #registerForm="ngForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <p>Enter username</p>
+        </ion-col>
+        <ion-col size="12">
+          <ion-input class="input" name="username" ngModel #uname="ngModel" [(ngModel)]=username required
+            placeholder="Enter username" minlength="6"> </ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="uname.touched && !uname.valid">
+          <ion-text color="danger">
+            <p *ngIf="uname.errors.required">Please enter username</p>
+            <p *ngIf="uname.errors.minlength">Username should be a minimum of 6 character long</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Enter e-mail</p>
+        </ion-col>
+        <ion-col size="12">
+          <ion-input class="input" name="email" ngModel #uemail="ngModel" [(ngModel)]=email required
+          placeholder="Enter email"> </ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="uemail.touched && !uemail.valid">
+          <ion-text color="danger">
+            <p *ngIf="uemail.errors.required">Please enter email</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Enter password</p>
+        </ion-col>
+        <ion-col size="12">
+          <ion-input class="input" name="password" ngModel #upass="ngModel" [(ngModel)]=password required
+          placeholder="Enter password" type="password"> </ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="upass.touched && !upass.valid">
+          <ion-text color="danger">
+            <p *ngIf="upass.errors.required">Please enter password</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p>Confirm password</p>
+        </ion-col>
+        <ion-col size="12">
+          <ion-input class="input" name="repassword" ngModel #urepass="ngModel" [(ngModel)]=repassword required
+          placeholder="Confirm password" type="password"> </ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="urepass.touched && !urepass.valid">
+          <ion-text color="danger">
+            <p *ngIf="urepass.errors.required">Please confirm password</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" color="primary" [disabled]="!registerForm.valid" (click)="signUp()">Sign up</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    </form>
+  </div>
+</ion-content>

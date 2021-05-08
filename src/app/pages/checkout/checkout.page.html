@@ -1,0 +1,243 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="mid" *ngIf="baseProducts.length == 0">
+    <ion-row size="12" class="justify-content-center" disabled="true">
+      <ion-col>
+        <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>Cart is empty, please add some products first...!</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-button expand="block" color="primary"  [routerLink]="['/products']">Browse Products</ion-button>
+            </ion-card-content>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="ion-padding" *ngIf="baseProducts.length > 0">
+    <div *ngIf="!allPaymentGateways" class="spinnerSection" style="text-align: center;">
+        <ion-spinner name="lines"></ion-spinner>
+    </div>
+  <ion-grid *ngIf="allPaymentGateways"> 
+    <ion-row class="full padding-horizontal">
+      <ion-col size="12">
+        <ion-text><strong class="text">Order Summary</strong></ion-text>
+      </ion-col>
+      <ion-col size="9">
+        <ion-text>Item Total</ion-text>
+      </ion-col>
+      <ion-col size="3" class="text-end">
+        <ion-text>RSD {{ totalCheckoutAmount() }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="full" class="padding-horizontal">
+      <ion-col size="9">
+        <ion-text>Shipping</ion-text>
+      </ion-col>
+      <ion-col size="3" class="text-end">
+        <ion-text>RSD 0</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="full" class="padding-horizontal">
+      <ion-col size="9">
+        <ion-text>Item Total</ion-text>
+      </ion-col>
+      <ion-col size="3" class="text-end">
+        <ion-text>RSD {{ totalCheckoutAmount() }}</ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+      <ion-list>
+          <ion-list-header>
+            <ion-label>Select payment method</ion-label>
+          </ion-list-header>
+          <ion-radio-group *ngIf="allPaymentGateways">
+            <ion-item *ngFor="let payment of allPaymentGateways">
+              <ion-label>
+                <ion-row class="full" class="align-items-center">
+                  <ion-col size="10">
+                    <ion-row class="align-items-center">
+                      <p class="no-margin">
+                        <strong>{{ payment.title }}</strong>
+                      </p>
+                    </ion-row>
+                    <ion-row class="align-items-center">
+                      <p>{{ payment.description }}</p>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-label>
+              <ion-radio
+                slot="start"
+                (click)="choosePaymnetGateway(payment)"
+              ></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+        </ion-col>
+        </ion-row>
+  <ion-row> 
+    <ion-col size="12">
+    <form #orderForm="ngForm" (ngSubmit)="OnSubmit(orderForm)">
+        <ion-row>
+          <ion-col>
+            <ion-text><span class="label">First Name</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_first_name" 
+              required 
+              #fname="ngModel" 
+              [(ngModel)] = billing_first_name
+            ></ion-input>
+            <ion-text color="danger" *ngIf="fname.touched && !fname.valid">
+              <strong>Please enter first name..!</strong>
+            </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><span class="label">Last Name</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_last_name" 
+              required 
+              #lname="ngModel" 
+              [(ngModel)]="billing_last_name"
+            ></ion-input>
+            <ion-text color="danger" *ngIf="lname.touched && !lname.valid">
+                <strong>Please enter last name..!</strong>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><span class="label">Address Line 1</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_address_1" 
+              required 
+              #address1="ngModel"
+              [(ngModel)]="billing_address_1"
+            ></ion-input>
+            <ion-text color="danger" *ngIf="address1.touched && !address1.valid">
+                <strong>Please enter address..!</strong>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><span class="label">Address Line 2</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_address_2" 
+              #address2="ngModel"
+              [(ngModel)]="billing_address_2"
+              placeholder="Optional"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><span class="label">Country</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_country" 
+              required 
+              #country="ngModel" 
+              [(ngModel)]="billing_country"
+            ></ion-input>
+            <ion-text color="danger" *ngIf="country.touched && !country.valid">
+                <strong>Please enter country name..!</strong>
+              </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><span class="label">City</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_city" 
+              required 
+              #city="ngModel" 
+              [(ngModel)]="billing_city"
+            ></ion-input>
+            <ion-text color="danger" *ngIf="city.touched && !city.valid">
+                <strong>Please enter city name..!</strong>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><span class="label">State</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_state" 
+              required 
+              #state="ngModel" 
+              [(ngModel)]="billing_state"
+            ></ion-input>
+            <ion-text color="danger" *ngIf="state.touched && !state.valid">
+                <strong>Please enter state name..!</strong>
+              </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text><span class="label">Zipcode</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_postcode" 
+              required 
+              #postcode="ngModel" 
+              [(ngModel)]="billing_postcode"
+              type="number"
+            ></ion-input>
+            <ion-text color="danger" *ngIf="postcode.touched && !postcode.valid">
+                <strong>Please enter zipcode name..!</strong>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text><span class="label">Phone Number</span></ion-text>
+            <ion-input
+              class="input"
+              ngModel 
+              name="billing_phone" 
+              required 
+              #phone="ngModel" 
+              [(ngModel)]="billing_phone"
+              type="number"
+            ></ion-input>
+            <ion-text color="danger" *ngIf="phone.touched && !phone.valid">
+                <strong>Please enter phone number..!</strong>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+        <ion-col>
+            <ion-button expand="block"  [disabled]="!orderForm.valid" (click)="completePurchase()"
+            ><span><strong>Confirm Order</strong></span
+            ><span *ngIf="spinner"><ion-spinner name="lines"></ion-spinner></span>
+          </ion-button>
+        </ion-col>
+        </ion-row>
+        </form> 
+      </ion-col>
+  </ion-row>
+  </ion-grid>
+</div>
+</ion-content>

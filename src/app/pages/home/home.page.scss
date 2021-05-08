@@ -1,0 +1,32 @@
+ion-item.selected {
+    --color: var(--ion-color-primary);
+    text-align: center;
+  }
+
+ion-text {
+    text-align: center;
+}
+
+ion-button{
+    text-align: center;
+    max-width: 60vw; // this is applying perfectly
+    max-height: 10vh;
+}
+
+#el1 {
+    display: inline-block;
+    margin-left: 10px;
+    width: 200px;
+  }
+  
+  #el2 {
+    display: inline-block;
+    width: 200px;
+    size: 14;
+  }
+
+  #el3 {
+    display: inline-block;
+    margin-right: 10px;
+    width: 200px;
+  }

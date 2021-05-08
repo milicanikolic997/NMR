@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Order status</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <h3 *ngIf="isOrderSuccessful">Your order has been placed successfully!</h3>
+    <h3 *ngIf="!isOrderSuccessful">Please click below to see your orders!</h3>
+    <ion-grid *ngIf="currentOrderData">
+      <ion-row>
+        <ion-col>
+          <h3 style="text-align: center;">Order Summery</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Order ID:
+        </ion-col>
+        <ion-col>
+          #{{ currentOrderData.id}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Payment Method:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.payment_method_title}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Order Total:
+        </ion-col>
+        <ion-col>
+          RSD {{ currentOrderData.total}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h3 style="text-align: center;">Billing and Shiping Info</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Name:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.billing.first_name}} {{ currentOrderData.billing.last_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Email:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.billing.email}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Address:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.billing.address_1}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Phone:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.billing.phone}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Country:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.billing.country}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          City:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.billing.city}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          State:
+        </ion-col>
+        <ion-col>
+          {{ currentOrderData.billing.state}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

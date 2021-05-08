@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="categories"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Single category</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+
+    <ion-grid>
+      <ion-row>
+        <div *ngIf="!products" class="spinnerSection" style="text-align: center;">
+          <ion-spinner name="dots" color="primary"></ion-spinner>
+        </div>
+        <ion-col size-lg="4" size-xs=12 *ngFor="let product of products">
+          <ion-card [routerLink]="['/products', product.id]">
+            <img src="{{product.images[0].src }}" alt=""/>
+          <ion-card-header>
+            <ion-card-subtitle>Price: {{product.price}}RSD</ion-card-subtitle>
+            <ion-card-title>{{product.name}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div [innerHtml]="product.description"></div>
+          </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+
+</ion-content>
